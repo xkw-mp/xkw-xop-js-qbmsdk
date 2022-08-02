@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+xkw.com Inc. Copyright (c) 2022 All Rights Reserved.
+   @author Luozl
+   @version 1.0
+   @date 2022年07月01日
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>xopqbm-js-sdk 测试页面</title>
+    <script src="xkw-xop-qbmsdk.js"></script>
+</head>
+<body>
+<h1>拆分试题</h1>
+<p id="demo"><b>试题部位</b></p>
+<p>输入xopqbm返回的试题(切面下面的单选框可以看到样例)</p>
+<input type="radio" name="part" value="stem" checked onclick="partChange(this)">题干
+<input type="radio" name="part" value="answer" onclick="partChange(this)">答案
+<input type="radio" name="part" value="explatition" onclick="partChange(this)">解析
+<br/>
+<textarea id="text" style="height: 200px;width:800px"></textarea>
+<button type="button" onclick="split()">拆分</button>
+<p><b>拆分结果</b></p>
+<textarea id="result" style="height: 200px;width:800px"></textarea>
+</body>
+<script>
+    function split() {
+        const parser = new QuestionParserService();
+        var parts = Object.values(document.getElementsByName("part"))
+            .filter(function (node) {
+                return node.checked == true;
+            });
+        if (parts == null || parts.length == 0) {
+            alert("必须选择拆分的部位");
+        }
+        var result = "";
+        var textToSplit = document.getElementById("text").value;
+        result = parts[0].value === "stem" ? parser.splitStem(textToSplit)
+            : parts[0].value === "answer" ? parser.splitAnswer(textToSplit)
+                : parser.splitExplanation(textToSplit);
+        document.getElementById("result").value = JSON.stringify(result);
+    }
+
+    const stem = "<div class=\"qml-stem\"><p style=\"\"><span style=\"font-family: 宋体;\">选择每组单词中不属于同一类的词。</span></p><div class=\"qml-sq\"><div class=\"qml-stem\"><br/><span class=\"ques-no\">1. </span><div class=\"qml-inline qml-og\">A.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">thirty</span></span>　　　　B.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">happy</span></span>　　　　C.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">sixty</span></span></div></div></div><div class=\"qml-sq\"><div class=\"qml-stem\"><br/><span class=\"ques-no\">2. </span><div class=\"qml-inline qml-og\">A.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">sports</span></span>　　　　B.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">trousers</span></span>　　　　C.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">shorts</span></span></div></div></div><div class=\"qml-sq\"><div class=\"qml-stem\"><br/><span class=\"ques-no\">3. </span><div class=\"qml-inline qml-og\">A.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">run</span></span>　　　　B.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">plant</span></span>　　　　C.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">jump</span></span></div></div></div><div class=\"qml-sq\"><div class=\"qml-stem\"><br/><span class=\"ques-no\">4. </span><div class=\"qml-inline qml-og\">A.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">ground</span></span>　　　　B.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">floor</span></span>　　　　C.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">eighty</span></span></div></div></div><div class=\"qml-sq\"><div class=\"qml-stem\"><br/><span class=\"ques-no\">5. </span><div class=\"qml-inline qml-og\">A.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">mountain</span></span>　　　　B.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">these</span></span>　　　　C.&nbsp;<span class=\"qml-op\"><span style=\"font-family: 'Times New Roman';\">those</span></span></div></div></div></div>";
+    const answer = "<div class=\"qml-answer\"><span class=\"qml-an-sq\">&nbsp;&nbsp;&nbsp;&nbsp;①. <span class=\"qml-an  \"><span style=\"font-family: 宋体;\">平平安安</span></span>&nbsp;&nbsp;&nbsp;&nbsp;②. <span class=\"qml-an  \"><span style=\"font-family: 宋体;\">认认真真</span></span>&nbsp;&nbsp;&nbsp;&nbsp;③. <span class=\"qml-an  \"><span style=\"font-family: 宋体;\">仔仔细细</span></span>&nbsp;&nbsp;&nbsp;&nbsp;④. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">③</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑤. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">④</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑥. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">①</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑦. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">⑥</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑧. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">⑤</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑨. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">②</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑩. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">②</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑪. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">①</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑫. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">④</span></span>&nbsp;&nbsp;&nbsp;&nbsp;⑬. <span class=\"qml-an  qml-exact\"><span style=\"font-family: 宋体;\">③</span></span></span></div>";
+    const exp = "<div class=\"qml-explanation\"><div class=\"qml-seg\" seg-name=\"分析\">【分析】<p style=\"\"><span>1111</span></p></div><div class=\"qml-exps-sq\">(1)题详解： <span>A三十，B开心的，C六十，AC是基数词，B是形容词，故选B。</span><br  /></div><div class=\"qml-exps-sq\">(2)题详解： <span>A运动，B裤子，C短裤，A是表示运动总称的名词，BC是表示具体服装的名词，故选A。</span><br  /></div><div class=\"qml-exps-sq\">(3)题详解： <span>A跑步，B植物，C跳，AC是动词 ，B是名词，故选B。</span><br  /></div><div class=\"qml-exps-sq\">(4)题详解： <span>A地面，B地板，C八十，AB是名词， C是基数词，故选C。</span><br  /></div><div class=\"qml-exps-sq\">(5)题详解： <span>A山，B这些，C那些，A是名词，BC是代词，故选A。</span><br  /></div><div class=\"qml-seg\" seg-name=\"点睛\">【点睛】<p style=\"\"><span>321</span></p></div></div>";
+
+    function partChange(e) {
+        document.getElementById("text").value = e.value == "stem" ? stem : e.value == "answer" ? answer : exp;
+    }
+
+    document.getElementById("text").value = stem;
+</script>
+</html>
