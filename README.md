@@ -23,9 +23,9 @@
 
 ### **直接使用JS-SDK**
 
-1. 点击[下载JS-SDK](https://static.zxxk.com/baseapp/xop/xkw-xop-js-qbmsdk-1.0.0.zip)；
+1). 点击[下载JS-SDK](https://static.zxxk.com/baseapp/xop/xkw-xop-js-qbmsdk-1.0.1.zip)；
 
-1. 复制到工程文件夹中，即可使用。
+2). 复制到工程文件夹中，即可使用。
 
 ## 接口使用
 
@@ -66,22 +66,26 @@ console.log(stem);
 
 返回数据：Stem
 
-| 字段     | 参数说明                                           | 类型       |
-| -------- | -------------------------------------------------- | ---------- |
-| html     | 题干                                               | String     |
-| type     | 试题结构类型：选择题，填空题，复合题               | String     |
-| og       | 选项                                               | StemOg     |
-| +cols    | 每行显示选项个数                                   | Inetger    |
-| +ogOps   | 选项组(有序数组，例如有4个选项，那么选项为ABCD)    | temOgOp[]  |
-| ++html   | 选项的html数据                                     | String     |
-| sqs      | 小题(小问)：小题或者小问下面不允许再有小题或者小问 | Stem[]     |
-| +type    | 类型                                               | String     |
-| +html    | 选项的html数据                                     | String     |
-| +og      | 小题(小问)选项组                                   | StemOg     |
-| ++cols   | 每行显示选项个数                                   | Inetger    |
-| ++ogOps  | 选项组(有序数组)                                   | StemOgOp[] |
-| +++html  | 选项的html数据                                     | String     |
-| +++index | 选项序号(A,B,C,D等)                                | String     |
+| 字段          | 参数说明                                           | 类型       |
+| ------------- | -------------------------------------------------- | ---------- |
+| html          | 题干                                               | String     |
+| type          | 试题结构类型：选择题，填空题，复合题               | String     |
+| sqIdMode      | 0=小题，1=小问                                     | Inetger    |
+| sqBlankCount  | 题干中小题空的个数                                 | Inetger    |
+| og            | 选项                                               | StemOg     |
+| +cols         | 每行显示选项个数                                   | Inetger    |
+| +ogOps        | 选项组(有序数组，例如有4个选项，那么选项为ABCD)    | temOgOp[]  |
+| ++html        | 选项的html数据                                     | String     |
+| sqs           | 小题(小问)：小题或者小问下面不允许再有小题或者小问 | Stem[]     |
+| +type         | 类型                                               | String     |
+| +sqIdMode     | 0=小题，1=小问                                     | Inetger    |
+| +sqBlankCount | 题干中小题空的个数                                 | Inetger    |
+| +html         | 选项的html数据                                     | String     |
+| +og           | 小题(小问)选项组                                   | StemOg     |
+| ++cols        | 每行显示选项个数                                   | Inetger    |
+| ++ogOps       | 选项组(有序数组)                                   | StemOgOp[] |
+| +++html       | 选项的html数据                                     | String     |
+| +++index      | 选项序号(A,B,C,D等)                                | String     |
 
 ## 答案拆分
 
@@ -179,4 +183,4 @@ console.log(question);
 
 1. 需要传递的是试题的题干html，但是传递了答案或者解析的html
 
-1. 对xopqbm返回的html数据做了其他处理，破坏了原有的结构
+1. 对xopqbm返回的html数据做了其他处理，破坏了原有的结构，再调用接口有可能报错

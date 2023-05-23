@@ -15,6 +15,7 @@
  *  @date 2022年07月01日
  */
 function QuestionParserService() {
+    var SQ = "sq";
     /**
      * 题干
      */
@@ -23,6 +24,18 @@ function QuestionParserService() {
      * 小题
      */
     var QML_SQ = "qml-sq";
+    /**
+     * 答题空
+     */
+    var QML_BK = "qml-bk";
+    /**
+     * 小问
+     */
+    var QML_ID_CONTAINER = "id-container";
+    /**
+     * 小问属性
+     */
+    var QML_ID_CONTAINER_VAL = "question";
     /**
      * 选项组
      */
@@ -118,6 +131,18 @@ function QuestionParserService() {
             return element.outerHTML;
         }).join("");
         retStem.type = getQuestionType(retStem);
+        //中小题空的个数
+        retStem.sqBlankCount = Object.values(stemElement.querySelectorAll("."+QML_BK)).filter(function (element) {
+            return element.hasAttribute(SQ)
+        }).length;
+        //0=小题，1=小问
+        retStem.sqIdMode = Object.values(stemElement.querySelectorAll("*")).filter(function (element) {
+            return element.hasAttribute(QML_ID_CONTAINER) && element.getAttribute(QML_ID_CONTAINER) === QML_ID_CONTAINER_VAL
+        }).length > 0 ? 1 : 0;
+        //修复下小题中的字段
+        retStem.sqs.forEach(function (element) {
+            element.sqIdMode = retStem.sqIdMode;
+        })
         return retStem;
     }
 
