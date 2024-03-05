@@ -198,9 +198,9 @@ function QuestionParserService() {
                         return hasClass(element, QML_AN);
                     }).map(function (element) {
                         return {
-                            "html": element.outerHTML,
+                            "html": hasClass(element, QML_ISOP) ? element.innerHTML : element.outerHTML,
                             "op": hasClass(element, QML_ISOP),
-                            "exact": hasClass(element, QML_EXACT)
+                            "exact": hasClass(element, QML_EXACT) || hasClass(element, QML_ISOP)
                         };
                     })
                 };
