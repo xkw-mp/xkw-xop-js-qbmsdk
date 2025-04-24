@@ -126,7 +126,7 @@ function QuestionParserService() {
         });
         retStem.og = splitOg(ogElement.length > 0 ? ogElement[0] : null);
         retStem.html = Object.values(stemElement.childNodes).filter(function (element) {
-            return !hasClass(element, QML_SQ) && !hasClass(element, QML_OG) && !hasClass(element, QML_QUES_NO);
+            return !hasClass(element, QML_SQ) && !hasClass(element, QML_OG);
         }).map(function (element) {
             return element.outerHTML;
         }).join("");
